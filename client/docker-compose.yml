@@ -1,6 +1,6 @@
 services:
-  CodeReader-client:
-    container_name: CodeReader-client
+  code-reader-client:
+    container_name: code-reader-client
     build:
       context: .
       dockerfile: Dockerfile

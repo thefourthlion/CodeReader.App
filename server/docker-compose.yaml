@@ -1,7 +1,7 @@
 services:
-  pdf-server:
+  code-reader-server:
     build: .
-    container_name: pdf-server
+    container_name: code-reader-server
     ports:
       - "3011:3011"
     volumes:
