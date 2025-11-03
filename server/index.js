@@ -7,7 +7,19 @@ require("dotenv").config({ path: "./.env" });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+const allowedOrigins = ["http://localhost:3010", "https://codereader.app"];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+};
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 // Connect to database
 connectDB();
