@@ -1,0 +1,13 @@
+services:
+  CodeReader-client:
+    container_name: CodeReader-client
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3010:3010'
+    environment:
+      - NODE_ENV=production
+      - PORT=3010
+      - NEXT_PUBLIC_API_URL=https://api.codereader.app
+    restart: unless-stopped
