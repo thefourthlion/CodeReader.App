@@ -50,6 +50,7 @@ app.get("/", (req, res) => {
 // Routes
 app.use("/api/QRCode", require("./routes/QRCode"));
 
-app.listen(PORT, () => {
-  console.log("✅ Listening on port " + PORT);
+// Bind to 0.0.0.0 to allow connections from Android emulator (10.0.2.2)
+app.listen(PORT, "0.0.0.0", () => {
+  console.log("✅ Listening on port " + PORT + " (0.0.0.0)");
 });
