@@ -12,7 +12,11 @@
     "cap:sync:ios": "pnpm cap sync ios && pnpm cap:configure",
     "cap:run:ios": "pnpm cap:sync:ios && pnpm cap run ios",
     "dev:ios": "node scripts/dev-ios.js",
-    "ios:fix": "node scripts/update-ios-config.js"
+    "ios:fix": "node scripts/update-ios-config.js",
+    "cap:sync:android": "pnpm cap sync android",
+    "cap:build:android": "bash scripts/build-android.sh",
+    "cap:run:android": "pnpm build && pnpm cap:build:android && bash scripts/install-android.sh",
+    "cap:open:android": "pnpm cap open android"
   },
   "dependencies": {
     "@capacitor/android": "^7.4.3",
@@ -62,7 +66,7 @@
   },
   "devDependencies": {
     "@capacitor/cli": "^7.4.3",
-    "@capacitor/configure": "^2.0.10",
+    "@capacitor/configure": "^0.0.2",
     "@next/eslint-plugin-next": "15.0.4",
     "@react-types/shared": "3.25.0",
     "@types/node": "20.5.7",

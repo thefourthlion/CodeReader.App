@@ -7,6 +7,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
 import { parseQRCode } from "@/utils/qrParser";
 import { QRIcon } from "@/components/QRIcons";
+import { API_URL } from "@/config/api";
 
 interface QRCodeData {
     id: number;
@@ -33,8 +34,6 @@ const QRCodeHistory = () => {
     const auth = getAuth(app);
     const [user, authLoading] = useAuthState(auth);
     const router = useRouter();
-
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     useEffect(() => {
         if (!authLoading && !user) {

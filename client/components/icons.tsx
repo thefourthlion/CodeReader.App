@@ -1,8 +1,33 @@
 import * as React from "react";
 import { IconSvgProps } from "@/types";
+import Image from "next/image";
 
-export const Logo: React.FC<IconSvgProps> = ({
+interface LogoProps {
+  size?: number;
+  width?: number;
+  height?: number;
+  className?: string;
+}
+
+export const Logo: React.FC<LogoProps> = ({
   size = 36,
+  width,
+  height,
+  className,
+}) => (
+  <Image
+    src="/images/icon.svg"
+    alt="CodeReader.app Logo"
+    width={width || size}
+    height={height || size}
+    className={className}
+    priority
+  />
+);
+
+// QR Code icon for the navbar/buttons
+export const QRCodeIcon: React.FC<IconSvgProps> = ({
+  size = 24,
   width,
   height,
   ...props
@@ -10,16 +35,16 @@ export const Logo: React.FC<IconSvgProps> = ({
   <svg
     fill="none"
     height={size || height}
-    viewBox="0 0 32 32"
+    viewBox="0 0 24 24"
     width={size || width}
     {...props}
   >
-    <path
-      clipRule="evenodd"
-      d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
-      fill="currentColor"
-      fillRule="evenodd"
-    />
+    <path d="M3 11V3H11V11H3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M13 3H21V11H13V3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M3 13H11V21H3V13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M18 13H21V16H18V13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M13 18H16V21H13V18Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M18 18H21V21H18V18Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 

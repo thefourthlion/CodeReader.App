@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { initFirebase } from "@/firebase";
 import { getAuth } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { API_URL } from "@/config/api";
 
 type QRType = 'url' | 'text' | 'contact' | 'email' | 'sms' | 'geo' | 'phone' | 'calendar' | 'wifi' | 'barcode';
 
@@ -209,8 +210,6 @@ const CreateQRCode = () => {
     const app = initFirebase();
     const auth = getAuth(app);
     const [user, loading] = useAuthState(auth);
-    
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
     
     // URL fields
     const [url, setUrl] = useState<string>('');

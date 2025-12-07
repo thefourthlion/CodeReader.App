@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { parseQRCode, ParsedQRCode } from "@/utils/qrParser";
 import { QRDisplay } from "@/components/QRDisplay";
 import { QRActions } from "@/components/QRActions";
+import { API_URL } from "@/config/api";
 
 const QRCodeScanner = () => {
     const [data, setData] = useState<string>("No result");
@@ -27,8 +28,6 @@ const QRCodeScanner = () => {
     const auth = getAuth(app);
     const [user, loading] = useAuthState(auth);
     const router = useRouter();
-
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     // Detect if scanned code is a barcode based on content pattern
     const detectBarcodeType = (decodedText: string): { isBarcode: boolean; format: "CODE128" | "EAN13" | "EAN8" | "UPC" | "CODE39" | "ITF14" } => {
