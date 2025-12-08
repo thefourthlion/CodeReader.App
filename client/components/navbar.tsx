@@ -117,8 +117,8 @@ export const Navbar = () => {
         </NavbarItem>
         <NavbarItem>
           <Button 
-            color="primary"
-            variant="solid"
+            color="primary" 
+            variant="solid" 
             size="sm"
             className={`
               font-bold px-5 transition-all duration-300 transform hover:scale-105
@@ -160,9 +160,9 @@ export const Navbar = () => {
         <div className="flex flex-col gap-3 px-2">
           {navLinks.map((item, index) => (
             <NavbarMenuItem key={`${item.label}-${index}`}>
-              <Link 
-                href={item.href} 
-                size="lg"
+                <Link 
+                  href={item.href} 
+                  size="lg"
                 className={`
                   flex items-center gap-3 w-full px-4 py-3.5 rounded-2xl
                   transition-all duration-300 transform hover:scale-[1.02]
@@ -175,8 +175,8 @@ export const Navbar = () => {
                 <span className={isActive(item.href) ? 'text-white' : 'text-primary'}>
                   {item.icon}
                 </span>
-                {item.label}
-              </Link>
+                  {item.label}
+                </Link>
             </NavbarMenuItem>
           ))}
           

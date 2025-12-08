@@ -8,7 +8,7 @@ footer {
   // Smooth hover transitions for all links
   a {
     transition: all 0.2s ease;
-  }
+      }
   
   // Subtle hover effect for quick action buttons
   .quick-action-btn {
@@ -27,19 +27,19 @@ footer {
     &:hover::after {
       transform: translateX(100%);
     }
+    }
   }
-}
 
 // Responsive adjustments
-@media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 768px) {
   footer {
     .footer-grid {
       text-align: center;
+      }
     }
   }
-}
 
-@media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 480px) {
   footer {
     .brand-section {
       align-items: center;
@@ -47,8 +47,8 @@ footer {
       p {
         text-align: center;
       }
-    }
-    
+      }
+
     .badges {
       justify-content: center;
     }

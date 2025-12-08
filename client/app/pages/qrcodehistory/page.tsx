@@ -23,6 +23,7 @@ const QRCodeHistory = () => {
     const [qrCodes, setQrCodes] = useState<QRCodeData[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [debugInfo, setDebugInfo] = useState<string[]>([]);
     
     // Filters and search
     const [activeTab, setActiveTab] = useState<'all' | 'created' | 'scanned'>('all');
@@ -43,26 +44,55 @@ const QRCodeHistory = () => {
 
     useEffect(() => {
         if (user) {
-            fetchQRCodes();
+            runDebugTests();
         }
     }, [user]);
+
+    const addDebug = (msg: string) => {
+        setDebugInfo(prev => [...prev, `${new Date().toLocaleTimeString()}: ${msg}`]);
+    };
+
+    const runDebugTests = async () => {
+        addDebug(`API_URL = ${API_URL}`);
+        addDebug(`User agent: ${navigator.userAgent.substring(0, 50)}...`);
+        
+        // Test 1: Try to reach API root
+        try {
+            addDebug('Testing API root...');
+            const apiRoot = await fetch('https://api.codereader.app');
+            const text = await apiRoot.text();
+            addDebug(`API root: ${apiRoot.status} - ${text.substring(0, 50)}`);
+        } catch (e: any) {
+            addDebug(`API root FAILED: ${e.message}`);
+        }
+        
+        // Now fetch QR codes
+        fetchQRCodes();
+    };
 
     const fetchQRCodes = async () => {
         if (!user) return;
         
         setLoading(true);
+        const url = `${API_URL}/api/QRCode/read?userId=${user.uid}&limit=100`;
+        addDebug(`Fetching: ${url}`);
+        
         try {
-            const response = await fetch(`${API_URL}/api/QRCode/read?userId=${user.uid}&limit=100`);
+            const response = await fetch(url);
+            addDebug(`Response: ${response.status}`);
             
             if (response.ok) {
                 const result = await response.json();
                 setQrCodes(result.data);
+                addDebug(`Got ${result.data?.length || 0} QR codes`);
             } else {
-                setError('Failed to load QR codes');
+                const errorText = await response.text();
+                addDebug(`API Error: ${response.status} - ${errorText.substring(0, 100)}`);
+                setError(`Failed to load QR codes (${response.status})`);
             }
         } catch (err: any) {
-            console.error('Error fetching QR codes:', err);
-            setError(err.message || 'Failed to load QR codes');
+            addDebug(`FETCH ERROR: ${err.message}`);
+            setError(`Network error: ${err.message}`);
         } finally {
             setLoading(false);
         }
@@ -170,8 +200,25 @@ const QRCodeHistory = () => {
 
     if (error) {
         return (
-            <div className="min-h-screen bg-background flex items-center justify-center">
-                <div className="text-danger">{error}</div>
+            <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 gap-4">
+                <div className="text-danger text-lg">{error}</div>
+                
+                {/* Debug Panel */}
+                <div className="bg-gray-900 p-4 rounded-lg max-w-md w-full">
+                    <h3 className="text-yellow-400 font-bold mb-2">Debug Info:</h3>
+                    <div className="text-xs text-gray-300 space-y-1 max-h-64 overflow-y-auto">
+                        {debugInfo.map((info, i) => (
+                            <div key={i} className="font-mono break-all">{info}</div>
+                        ))}
+                    </div>
+                </div>
+                
+                <button 
+                    onClick={() => window.location.reload()} 
+                    className="bg-primary text-white px-4 py-2 rounded"
+                >
+                    Retry
+                </button>
             </div>
         );
     }

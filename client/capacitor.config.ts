@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.example.app',
+  appId: 'app.codereader.android',  // Unique package name for Play Store
   appName: 'CodeReader',
   webDir: 'out',
   server: {
@@ -15,6 +15,11 @@ const config: CapacitorConfig = {
   },
   android: {
     allowMixedContent: true
+  },
+  plugins: {
+    CapacitorHttp: {
+      enabled: true  // Use native HTTP instead of WebView fetch
+    }
   }
 };
 

@@ -16,7 +16,8 @@
     "cap:sync:android": "pnpm cap sync android",
     "cap:build:android": "bash scripts/build-android.sh",
     "cap:run:android": "pnpm build && pnpm cap:build:android && bash scripts/install-android.sh",
-    "cap:open:android": "pnpm cap open android"
+    "cap:open:android": "pnpm cap open android",
+    "cap:release:android": "bash scripts/build-android-release.sh"
   },
   "dependencies": {
     "@capacitor/android": "^7.4.3",
@@ -65,6 +66,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^7.4.3",
     "@capacitor/configure": "^0.0.2",
     "@next/eslint-plugin-next": "15.0.4",

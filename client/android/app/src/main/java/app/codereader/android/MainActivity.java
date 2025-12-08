@@ -1,4 +1,4 @@
-package com.example.app;
+package app.codereader.android;
 
 import com.getcapacitor.BridgeActivity;
 

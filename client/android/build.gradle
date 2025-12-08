@@ -17,6 +17,9 @@ buildscript {
 
 apply from: "variables.gradle"
 
+// Redirect build directories to /tmp to avoid macOS AppleDouble (._) files on external drives
+def tmpBuildDir = "/tmp/codereader-android-build/build"
+
 allprojects {
     repositories {
         google()
@@ -26,8 +29,12 @@ allprojects {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    
+    // Redirect build output to /tmp
+    layout.buildDirectory = new File("${tmpBuildDir}/${project.name}")
 }
 
 task clean(type: Delete) {
-    delete rootProject.buildDir
+    delete rootProject.layout.buildDirectory
+    delete new File(tmpBuildDir)
 }

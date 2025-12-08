@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">next-app-template</string>
-    <string name="title_activity_main">next-app-template</string>
-    <string name="package_name">com.example.app</string>
-    <string name="custom_url_scheme">com.example.app</string>
+    <string name="app_name">CodeReader</string>
+    <string name="title_activity_main">CodeReader</string>
+    <string name="package_name">app.codereader.android</string>
+    <string name="custom_url_scheme">app.codereader.android</string>
 </resources>

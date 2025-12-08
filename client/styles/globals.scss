@@ -12,7 +12,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+  
 html {
   scroll-behavior: smooth;
 }
@@ -124,9 +124,9 @@ body {
 .red-button {
   background-color: $pastel-red;
   border: 2px solid $pastel-red;
-  
+
   &:hover {
-    background-color: $pastel-red-dark;
+  background-color: $pastel-red-dark;
     border-color: $pastel-red-dark;
     transform: translateY(-1px);
   }
@@ -140,16 +140,16 @@ body {
   &:hover {
     background-color: rgba($pastel-red, 0.1);
     border-color: $pastel-red-dark;
-    color: $pastel-red-dark;
+  color: $pastel-red-dark;
   }
 }
 
 .green-button {
   background-color: $pastel-green;
   border: 2px solid $pastel-green;
-  
+
   &:hover {
-    background-color: $pastel-green-dark;
+  background-color: $pastel-green-dark;
     border-color: $pastel-green-dark;
     transform: translateY(-1px);
   }

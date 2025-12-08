@@ -113,7 +113,7 @@ export default function Home() {
                   <span className="block bg-gradient-primary bg-clip-text text-transparent mt-2">
                     QR Codes Instantly
                   </span>
-                </h1>
+              </h1>
 
                 {/* Subheading */}
                 <p className="text-lg sm:text-xl text-foreground/70 max-w-xl mx-auto lg:mx-0 leading-relaxed">
@@ -124,8 +124,8 @@ export default function Home() {
 
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                  <Link
-                    href="/pages/qrcode"
+                <Link
+                  href="/pages/qrcode"
                     className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 text-lg font-bold bg-gradient-primary text-white rounded-2xl overflow-hidden shadow-xl shadow-primary/25 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/40 hover:scale-[1.02] active:scale-[0.98]"
                   >
                     <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/25 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
@@ -139,18 +139,18 @@ export default function Home() {
                     <span className="relative z-10">Start Scanning</span>
                     <svg className="w-5 h-5 relative z-10 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none">
                       <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </Link>
+                  </svg>
+                </Link>
                   
-                  <Link
-                    href="/pages/createqrcode"
+                <Link
+                  href="/pages/createqrcode"
                     className="group inline-flex items-center justify-center gap-3 px-8 py-4 text-lg font-bold border-2 border-primary/30 text-primary rounded-2xl bg-gradient-to-r from-primary/5 to-secondary/5 transition-all duration-300 hover:border-primary/60 hover:from-primary/10 hover:to-secondary/10 hover:scale-[1.02] active:scale-[0.98]"
-                  >
+                >
                     <svg className="w-6 h-6 transition-transform duration-300 group-hover:rotate-90" viewBox="0 0 24 24" fill="none">
                       <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
-                    </svg>
+                  </svg>
                     <span>Create QR Code</span>
-                  </Link>
+                </Link>
                 </div>
 
                 {/* Trust Indicators */}
@@ -177,11 +177,11 @@ export default function Home() {
                   {/* Main Card */}
                   <div className="relative bg-gradient-to-br from-content1/80 to-content2/80 backdrop-blur-xl rounded-[2rem] p-8 sm:p-10 border-2 border-primary/20 shadow-2xl transition-all duration-500 group-hover:border-primary/40 group-hover:scale-[1.02]">
                     {/* QR Code */}
-                    <div className="relative">
-                      <QRCodeSVG 
-                        value="https://codereader.app"
+              <div className="relative">
+                  <QRCodeSVG 
+                    value="https://codereader.app"
                         size={280}
-                        level="H"
+                    level="H"
                         includeMargin={false}
                         className="w-56 h-56 sm:w-72 sm:h-72 rounded-xl"
                         bgColor="transparent"
@@ -202,7 +202,7 @@ export default function Home() {
                       </svg>
                       Try it now
                     </div>
-                  </div>
+                </div>
 
                   {/* Floating Elements */}
                   <div className="absolute -bottom-6 -left-6 p-4 bg-content1/90 backdrop-blur-xl rounded-2xl border border-primary/20 shadow-xl animate-float">
@@ -211,7 +211,7 @@ export default function Home() {
                         <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none">
                           <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2"/>
                           <path d="M8 12L11 15L16 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
+                  </svg>
                       </div>
                       <div>
                         <p className="text-xs text-foreground/60">Scans today</p>
@@ -266,7 +266,7 @@ export default function Home() {
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6">
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none">
                   <path d="M13 10V3L4 14H11V21L20 10H13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+                  </svg>
                 Powerful Features
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-6">
@@ -278,7 +278,7 @@ export default function Home() {
                 From lightning-fast scanning to professional QR code generation, 
                 we&apos;ve built the complete toolkit for modern code management.
               </p>
-            </div>
+              </div>
 
             {/* Features Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -303,7 +303,7 @@ export default function Home() {
                     <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none">
                       <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" strokeWidth="2"/>
                       <path d="M7 8V16M10 10V14M13 8V16M16 10V14" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                    </svg>
+                  </svg>
                   ),
                   title: "Barcode Scanner",
                   description: "Read EAN-13, EAN-8, UPC, CODE128, CODE39 and more. Perfect for inventory, retail, and product lookup.",
@@ -315,7 +315,7 @@ export default function Home() {
                   icon: (
                     <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none">
                       <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
-                    </svg>
+                  </svg>
                   ),
                   title: "QR Generator",
                   description: "Create custom QR codes for URLs, WiFi, contacts, events, and more. Download in high resolution for any use.",
@@ -326,9 +326,9 @@ export default function Home() {
                 {
                   icon: (
                     <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none">
-                      <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M17 21v-8H7v8M7 3v5h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                    <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M17 21v-8H7v8M7 3v5h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                   ),
                   title: "Save & Organize",
                   description: "Keep a history of all scanned and generated codes. Search, filter, and manage your collection effortlessly.",
@@ -370,8 +370,8 @@ export default function Home() {
                   {/* Icon */}
                   <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.gradient} text-white mb-6 shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}>
                     {feature.icon}
-                  </div>
-                  
+              </div>
+
                   {/* Content */}
                   <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
                     {feature.title}
@@ -388,7 +388,7 @@ export default function Home() {
                     <span>{feature.linkText}</span>
                     <svg className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1" viewBox="0 0 24 24" fill="none">
                       <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                  </svg>
                   </Link>
                 </div>
               ))}
@@ -405,7 +405,7 @@ export default function Home() {
                 <span className="text-foreground">Create QR Codes for</span>
                 <br />
                 <span className="bg-gradient-secondary bg-clip-text text-transparent">Any Purpose</span>
-              </h2>
+            </h2>
               <p className="text-lg text-foreground/60">
                 Generate professional QR codes for websites, WiFi networks, contact cards, 
                 events, payments, and much more.
@@ -438,7 +438,7 @@ export default function Home() {
                   </div>
                   <div className="font-bold text-foreground text-sm sm:text-base mb-1 group-hover:text-primary transition-colors duration-300">
                     {type.name}
-                  </div>
+                </div>
                   <div className="text-xs text-foreground/50">{type.desc}</div>
                 </Link>
               ))}
