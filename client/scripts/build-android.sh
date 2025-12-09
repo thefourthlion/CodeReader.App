@@ -21,11 +21,13 @@ mkdir -p "$TMP_PROJECT"
 # Copy android folder
 cp -R android "$TMP_PROJECT/"
 # Copy node_modules/@capacitor (needed for the build)
-mkdir -p "$TMP_PROJECT/node_modules/.pnpm"
-cp -R node_modules/.pnpm/@capacitor* "$TMP_PROJECT/node_modules/.pnpm/"
-# Also copy the linked @capacitor packages
 mkdir -p "$TMP_PROJECT/node_modules/@capacitor"
 cp -R node_modules/@capacitor/* "$TMP_PROJECT/node_modules/@capacitor/" 2>/dev/null || true
+# Also copy pnpm structure if it exists
+if [ -d "node_modules/.pnpm" ]; then
+    mkdir -p "$TMP_PROJECT/node_modules/.pnpm"
+    cp -R node_modules/.pnpm/@capacitor* "$TMP_PROJECT/node_modules/.pnpm/" 2>/dev/null || true
+fi
 
 # Fix the paths in settings.gradle to use absolute paths
 cd "$TMP_PROJECT/android"
