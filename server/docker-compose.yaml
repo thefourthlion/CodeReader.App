@@ -1,3 +1,5 @@
+name: codereader-server
+
 services:
   code-reader-server:
     build: .

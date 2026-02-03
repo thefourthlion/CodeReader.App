@@ -1,3 +1,4 @@
+name: codereader-tunnel
 
 services:
   code-reader-tunnel:

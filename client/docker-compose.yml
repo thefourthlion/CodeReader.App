@@ -1,3 +1,5 @@
+name: codereader-client
+
 services:
   code-reader-client:
     container_name: code-reader-client
