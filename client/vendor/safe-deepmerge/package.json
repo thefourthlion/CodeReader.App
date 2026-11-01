@@ -1,0 +1,8 @@
+{
+  "name": "deepmerge",
+  "version": "5.0.0",
+  "private": true,
+  "description": "Prototype-safe deep merge. Replaces deepmerge 4.x, which has no patched release.",
+  "main": "index.js",
+  "license": "MIT"
+}

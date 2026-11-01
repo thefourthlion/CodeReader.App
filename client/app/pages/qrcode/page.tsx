@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { parseQRCode, ParsedQRCode } from "@/utils/qrParser";
 import { QRDisplay } from "@/components/QRDisplay";
 import { QRActions } from "@/components/QRActions";
-import { API_URL } from "@/config/api";
+import { authorizedFetch } from "@/config/api";
 
 const QRCodeScanner = () => {
     const [data, setData] = useState<string>("No result");
@@ -256,13 +256,9 @@ const QRCodeScanner = () => {
             const type = parsedData?.type === 'url' ? 'url' : 'text';
             const title = parsedData ? `${parsedData.label}` : null;
             
-            const response = await fetch(`${API_URL}/api/QRCode/create`, {
+            const response = await authorizedFetch('/api/QRCode/create', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 body: JSON.stringify({
-                    userId: user.uid,
                     data: data,
                     type: type,
                     title: title,

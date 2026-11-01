@@ -1,30 +1,26 @@
-# Use the official Node.js LTS image
-FROM node:18-alpine
+FROM node:22-alpine AS build
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+COPY package.json package-lock.json ./
+COPY vendor ./vendor
+RUN npm ci
 
-# Install dependencies (including dev dependencies needed for build)
-RUN npm install
-
-# Copy the .env file first (for build time)
-COPY .env ./
-
-# Copy the rest of your application files
 COPY . .
 
-# Build the Next.js app for production
+ARG NEXT_PUBLIC_API_URL=https://api.codereader.app
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+
 RUN npm run build
 
-# Expose the port your app runs on
+FROM nginx:1.28-alpine
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/out /usr/share/nginx/html
+
 EXPOSE 3010
 
-# Set the PORT environment variable
-ENV PORT=3010
-ENV NODE_ENV=production
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD wget -q -O /dev/null http://127.0.0.1:3010/health
 
-# Start the Next.js production server
-CMD ["npm", "run", "start"]
+CMD ["nginx", "-g", "daemon off;"]

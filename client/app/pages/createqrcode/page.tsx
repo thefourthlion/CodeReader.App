@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { initFirebase } from "@/firebase";
 import { getAuth } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { API_URL } from "@/config/api";
+import { authorizedFetch } from "@/config/api";
 
 type QRType = 'url' | 'text' | 'contact' | 'email' | 'sms' | 'geo' | 'phone' | 'calendar' | 'wifi' | 'barcode';
 
@@ -417,13 +417,9 @@ const CreateQRCode = () => {
                 title = `Barcode (${barcodeFormat}): ${barcodeValue.substring(0, 30)}${barcodeValue.length > 30 ? '...' : ''}`;
             }
             
-            const response = await fetch(`${API_URL}/api/QRCode/create`, {
+            const response = await authorizedFetch('/api/QRCode/create', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 body: JSON.stringify({
-                    userId: user.uid,
                     data: qrValue,
                     type: qrType === 'url' ? 'url' : 'text',
                     title: title,

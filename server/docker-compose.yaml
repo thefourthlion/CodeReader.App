@@ -1,14 +1,17 @@
 name: codereader-server
 
 services:
-  code-reader-server:
+  codereader-server:
+    image: codereader-server:latest
+    container_name: codereader-server
     build: .
-    container_name: code-reader-server
     ports:
       - "3011:3011"
-    volumes:
-      - ./:/app
-      - /app/node_modules  # Prevent host node_modules from overwriting container's
     environment:
-      - NODE_ENV=production
+      NODE_ENV: production
+      PORT: "3011"
+      DATABASE_PATH: /data/database.sqlite
+      FIREBASE_PROJECT_ID: general-2ed6c
+    volumes:
+      - ./data:/data
     restart: unless-stopped

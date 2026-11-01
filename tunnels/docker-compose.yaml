@@ -1,11 +1,10 @@
 name: codereader-tunnel
 
 services:
-  code-reader-tunnel:
-    image: cloudflare/cloudflared:latest
-    container_name: code-reader-tunnel
+  codereader-tunnel:
+    image: cloudflare/cloudflared:2026.10.7
+    container_name: codereader-tunnel
     restart: unless-stopped
-    command: tunnel --no-autoupdate run --token eyJhIjoiODM5ZmMzODRmYzhmMzI4NWUyZDBmMGQ2M2JmZTRmNzUiLCJ0IjoiYWZhYzRkODEtODg1OS00ODMyLWI4ZTItNzkwOWUwYTllZWIwIiwicyI6Ik5qazBObUUwWWpNdFpHUTJZUzAwWm1ReUxUbGpPV1F0TTJSa09EVmxZbVkxTm1ZeCJ9
-
-
-
+    command: tunnel --no-autoupdate run
+    env_file:
+      - .env

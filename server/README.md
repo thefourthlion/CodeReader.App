@@ -40,11 +40,18 @@ pnpm start
 
 ### Docker Setup
 
-Run with Docker:
+From this directory:
+
 ```bash
-docker build -t sqlite-server .
-docker run -p 3002:3002 sqlite-server
+mkdir -p data
+# Keep an existing database.sqlite if you have one:
+# cp -n database.sqlite data/database.sqlite
+docker compose up -d --build
 ```
+
+The container name is `codereader-server`. The API listens on port **3011**. Saved QR codes are stored in `./data/database.sqlite`.
+
+Every `/api/QRCode` route requires `Authorization: Bearer <Firebase ID token>`. The signed-in user's id comes from that token.
 
 ## API Endpoints
 
@@ -59,11 +66,13 @@ Your custom model routes will be available at `/api/{model_name}/`
 
 ## Environment Variables
 
-- `PORT` - Server port (default: 3002)
+- `PORT` - Server port (default: 3011)
+- `DATABASE_PATH` - SQLite file (default: `./data/database.sqlite`)
+- `FIREBASE_PROJECT_ID` - Firebase project used to verify ID tokens (default: `general-2ed6c`)
 
 ## Database
 
-The SQLite database file `database.sqlite` is automatically created in the project root. The database is managed through Sequelize ORM with automatic migrations.
+The SQLite database file is created automatically. Records are readable only by the user who saved them.
 
 ## Troubleshooting
 

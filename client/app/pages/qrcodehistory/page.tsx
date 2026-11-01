@@ -7,7 +7,20 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
 import { parseQRCode } from "@/utils/qrParser";
 import { QRIcon } from "@/components/QRIcons";
-import { API_URL } from "@/config/api";
+import { authorizedFetch } from "@/config/api";
+
+function openHttpUrl(value: string) {
+    let url: URL;
+    try {
+        url = new URL(value);
+    } catch {
+        return;
+    }
+    if (url.protocol !== "https:" && url.protocol !== "http:") {
+        return;
+    }
+    window.open(url.href, "_blank", "noopener,noreferrer");
+}
 
 interface QRCodeData {
     id: number;
@@ -23,7 +36,6 @@ const QRCodeHistory = () => {
     const [qrCodes, setQrCodes] = useState<QRCodeData[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [debugInfo, setDebugInfo] = useState<string[]>([]);
     
     // Filters and search
     const [activeTab, setActiveTab] = useState<'all' | 'created' | 'scanned'>('all');
@@ -44,55 +56,32 @@ const QRCodeHistory = () => {
 
     useEffect(() => {
         if (user) {
-            runDebugTests();
+            fetchQRCodes();
         }
     }, [user]);
-
-    const addDebug = (msg: string) => {
-        setDebugInfo(prev => [...prev, `${new Date().toLocaleTimeString()}: ${msg}`]);
-    };
-
-    const runDebugTests = async () => {
-        addDebug(`API_URL = ${API_URL}`);
-        addDebug(`User agent: ${navigator.userAgent.substring(0, 50)}...`);
-        
-        // Test 1: Try to reach API root
-        try {
-            addDebug('Testing API root...');
-            const apiRoot = await fetch('https://api.codereader.app');
-            const text = await apiRoot.text();
-            addDebug(`API root: ${apiRoot.status} - ${text.substring(0, 50)}`);
-        } catch (e: any) {
-            addDebug(`API root FAILED: ${e.message}`);
-        }
-        
-        // Now fetch QR codes
-        fetchQRCodes();
-    };
 
     const fetchQRCodes = async () => {
         if (!user) return;
         
         setLoading(true);
-        const url = `${API_URL}/api/QRCode/read?userId=${user.uid}&limit=100`;
-        addDebug(`Fetching: ${url}`);
+        setError(null);
         
         try {
-            const response = await fetch(url);
-            addDebug(`Response: ${response.status}`);
+            const response = await authorizedFetch('/api/QRCode/read?limit=100');
             
-            if (response.ok) {
-                const result = await response.json();
-                setQrCodes(result.data);
-                addDebug(`Got ${result.data?.length || 0} QR codes`);
-            } else {
-                const errorText = await response.text();
-                addDebug(`API Error: ${response.status} - ${errorText.substring(0, 100)}`);
-                setError(`Failed to load QR codes (${response.status})`);
+            if (response.status === 401) {
+                router.push('/pages/login');
+                return;
             }
-        } catch (err: any) {
-            addDebug(`FETCH ERROR: ${err.message}`);
-            setError(`Network error: ${err.message}`);
+            if (response.ok) {
+                const result: { data?: QRCodeData[] } = await response.json();
+                setQrCodes(result.data ?? []);
+            } else {
+                setError('Failed to load QR codes');
+            }
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : 'Network error';
+            setError(message === 'Not signed in' ? 'Sign in to view saved QR codes' : 'Network error');
         } finally {
             setLoading(false);
         }
@@ -102,7 +91,7 @@ const QRCodeHistory = () => {
         if (!confirm('Delete this QR code?')) return;
         
         try {
-            const response = await fetch(`${API_URL}/api/QRCode/delete/${id}`, {
+            const response = await authorizedFetch(`/api/QRCode/delete/${id}`, {
                 method: 'DELETE',
             });
             
@@ -202,17 +191,6 @@ const QRCodeHistory = () => {
         return (
             <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 gap-4">
                 <div className="text-danger text-lg">{error}</div>
-                
-                {/* Debug Panel */}
-                <div className="bg-gray-900 p-4 rounded-lg max-w-md w-full">
-                    <h3 className="text-yellow-400 font-bold mb-2">Debug Info:</h3>
-                    <div className="text-xs text-gray-300 space-y-1 max-h-64 overflow-y-auto">
-                        {debugInfo.map((info, i) => (
-                            <div key={i} className="font-mono break-all">{info}</div>
-                        ))}
-                    </div>
-                </div>
-                
                 <button 
                     onClick={() => window.location.reload()} 
                     className="bg-primary text-white px-4 py-2 rounded"
@@ -475,7 +453,7 @@ const QRCodeHistory = () => {
                                         {/* URL, social, deeplink open button */}
                                         {(parsedData.type === 'url' || parsedData.type === 'social' || parsedData.type === 'deeplink') && (
                                             <button
-                                                onClick={() => window.open(qr.data, '_blank')}
+                                                onClick={() => openHttpUrl(qr.data)}
                                                 className="w-10 h-10 rounded-xl bg-gradient-primary text-primary-foreground hover:shadow-glow-primary transition-all duration-300 transform hover:scale-110 flex items-center justify-center shadow-lg"
                                                 title="Open"
                                             >

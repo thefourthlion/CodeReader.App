@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { initFirebase } from "@/firebase";
 import { getAuth, updateProfile } from "firebase/auth";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { getCheckoutUrl, getPortalUrl } from "./stripePayment";
 import { getSubscriptionStatus } from "./getPremiumStatus";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -80,25 +81,25 @@ export default function AccountPage() {
 
     try {
       const file = event.target.files[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("gid", auth.currentUser?.uid || "");
-
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const { url } = await response.json();
-
-      if (auth.currentUser) {
-        await updateProfile(auth.currentUser, {
-          photoURL: url,
-        });
-        setAvatarUrl(url);
+      const user = auth.currentUser;
+      if (!user) {
+        return;
       }
+      const allowed = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"]);
+      if (!allowed.has(file.type) || file.size > 2 * 1024 * 1024) {
+        window.alert("Use a JPEG, PNG, WEBP, or GIF under 2 MB.");
+        return;
+      }
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-80);
+      const storage = getStorage(app);
+      const objectRef = ref(storage, `avatars/${user.uid}/${Date.now()}-${safeName}`);
+      await uploadBytes(objectRef, file, { contentType: file.type });
+      const url = await getDownloadURL(objectRef);
+      await updateProfile(user, { photoURL: url });
+      setAvatarUrl(url);
     } catch (error) {
       console.error("Error uploading image:", error);
+      window.alert("Could not upload that image.");
     } finally {
       setIsUploadingImage(false);
     }
